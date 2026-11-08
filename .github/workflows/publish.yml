@@ -1,0 +1,22 @@
+name: Publish to Marketplace
+
+# Trusted Publishing (OIDC)：无需 PAT。发布版本号 = package.json 的 version。
+# 前置：Marketplace 发布者 mdview → Trusted Publishing 页已有策略绑定
+#   Repository owner = mdview2026 / Repository = vscode-mdview / Workflow = publish.yml
+# 改动流程：主仓 mdview 改 vscode/ → 同步本仓（除 .github 外整目录覆盖）→ push → 手动 Run workflow
+on:
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Publish with OIDC trusted publishing
+        run: npx -y @vscode/vsce publish --oidc

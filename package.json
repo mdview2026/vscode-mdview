@@ -1,0 +1,91 @@
+{
+    "name": "mdview",
+    "displayName": "mdview",
+    "description": "mdview / mdpeek 桌面版官方插件：在 VS Code 中编辑 Markdown，mdview（国内版）/ mdpeek（国际版）窗口实时无感预览，光标/选区双向同步",
+    "version": "0.2.3",
+    "publisher": "mdview",
+    "license": "MIT",
+    "icon": "icon.png",
+    "homepage": "https://mdview.cn",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/mdview2026/vscode-mdview.git"
+    },
+    "keywords": [
+        "markdown",
+        "preview",
+        "markdown preview",
+        "live preview",
+        "mdview"
+    ],
+    "engines": {
+        "vscode": "^1.80.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "onLanguage:markdown"
+    ],
+    "main": "./extension.js",
+    "contributes": {
+        "commands": [
+            {
+                "command": "mdview.preview",
+                "title": "在 mdview 中预览当前文件"
+            }
+        ],
+        "menus": {
+            "editor/context": [
+                {
+                    "command": "mdview.preview",
+                    "when": "resourceLangId == markdown",
+                    "group": "navigation"
+                }
+            ],
+            "editor/title": [
+                {
+                    "command": "mdview.preview",
+                    "when": "resourceLangId == markdown",
+                    "group": "navigation"
+                }
+            ]
+        },
+        "configuration": {
+            "title": "mdview",
+            "properties": {
+                "mdview.path": {
+                    "type": "string",
+                    "default": "",
+                    "description": "mdview / mdpeek 可执行文件路径（留空自动探测：.md 文件关联的打开方式 → 注册表 InstallDir → 常见安装目录 → PATH）"
+                },
+                "mdview.enabled": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "实时预览推送总开关"
+                },
+                "mdview.debounceMs": {
+                    "type": "number",
+                    "default": 300,
+                    "description": "输入停止后多少毫秒推送预览"
+                },
+                "mdview.syncCursor": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "位置双向同步（移动光标预览跟随滚动 / 预览点击光标回跳 / 预览选中同步选中源码）"
+                },
+                "mdview.channel": {
+                    "type": "string",
+                    "default": "auto",
+                    "enum": ["auto", "cn", "intl"],
+                    "description": "下载页通道：auto = 编辑器界面语言为中文时打开国内版 mdview 下载页（mdview.cn），其余打开国际版 mdpeek（mdpeek.net）；两版配置/付费/更新通道完全独立，分流不对可在此手动指定"
+                },
+                "mdview.debugLog": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "排查用：往「mdview」输出通道写推送/光标/选区同步详细日志"
+                }
+            }
+        }
+    }
+}
