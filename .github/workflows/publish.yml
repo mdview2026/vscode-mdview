@@ -19,4 +19,6 @@ jobs:
         with:
           node-version: '20'
       - name: Publish with OIDC trusted publishing
-        run: npx -y @vscode/vsce publish --oidc
+        run: |
+          npx -y @vscode/vsce@4.1.0 --version
+          npx -y @vscode/vsce@4.1.0 publish --oidc
